@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { makemongoConnection } from "./src/mongodb/mongodb.js";
 import authRoutes from "./src/routes/auth.routes.js"
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -12,8 +13,6 @@ app.use(express.json());
 await makemongoConnection();
 
 app.use("/api/auth", authRoutes);
-
-
 
 app.get("/", async (request, response) => {
     response.json({

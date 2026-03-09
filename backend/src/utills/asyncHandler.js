@@ -3,7 +3,7 @@ export default function asyncHandler(handler) {
         try {
             handler()
         } catch (error) {
-                throw error
+            throw new Error(`handler error: ${error}`)
         }
     }
 }
