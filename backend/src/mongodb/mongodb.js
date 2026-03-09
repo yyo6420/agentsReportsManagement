@@ -6,11 +6,12 @@ export const makemongoConnection = async () => {
     if (mongoconnection) return mongoconnection;
     try {
         if (!process.env.MONGO_URI) {
-            throw new Error("MONGO_URI is not exists in .env file");
+            throw new Error("MONGO_URI is not exist in .env file");
         }
         mongoconnection = new MongoClient(process.env.MONGO_URI);
         await mongoconnection.connect();
         console.log("Connection is established successfully ;)")
+        return mongoconnection;
     } catch (error) {
         mongoconnection = null;
         console.error(error.message);
