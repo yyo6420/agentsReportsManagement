@@ -21,8 +21,9 @@ export const getAgent = async (agentCode) => {
     if (agentsCollection === undefined) {
         agentsCollection = db?.collection("agents");
     }
+    const result = agentsCollection.findOne({ agentCode })
 
-    return agentsCollection.findOne({ agentCode })
+    return result;
 }
 
 export const getAgentById = async (id, fieldToDelet = []) => {

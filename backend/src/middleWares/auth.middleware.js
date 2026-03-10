@@ -1,12 +1,32 @@
 import jwt from "jsonwebtoken";
+
 export const auth = (roles) => (request, response, next) => {
     try {
-        const token = request.headers.authorization.split(" ")[1]
+        const header = request.headers.authorization;
+
+        if (!header) {
+            return response.status(401).send({ message: "The header is missing :(" });
+        }
+
+        const token = header.split(" ")[1];
+
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        if (!decoded || !roles.includes(decoded.roles)) throw new Error("Not Authorized ;(");
+
+        if (!roles.includes(decoded.roles)) {
+            return response.status(403).send({ message: "Sorry, you don't have permission :(" });
+        }
+
         request.agentId = decoded.id;
         next();
+
     } catch (error) {
-        response.status(error.status || 500).send({ massage: "Authorization Error ;(", error: error.massage })
+        if (error.name === "TokenExpiredError") {
+            return response.status(401).send({ message: "Token expired, please login again" });
+        }
+        if (error.name === "JsonWebTokenError") {
+            return response.status(401).send({ message: "Invalid token" });
+        }
+
+        response.status(500).send({ message: "Authorization Error :(", error: error.message });
     }
-}
+};
