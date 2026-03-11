@@ -36,16 +36,13 @@ export const getAgentById = async (id, fieldToDelet = []) => {
 }
 
 export const getAgents = async (filter = {}) => {
-    try {
-        if (agentsCollection === undefined) {
-            agentsCollection = db?.collection("agents");
-        }
-
-        const result = agentsCollection.find(filter).toArray();
-
-        return result;
-    } catch (error) {
-        console.error("Failed to fetch agents with filter:", filter);
-        throw error;
+    if (agentsCollection === undefined) {
+        agentsCollection = db?.collection("agents");
     }
+
+    const result = agentsCollection.find(filter).toArray();
+    if (!result) throw new Error("The resulst are not found :(");
+
+    return result;
+
 }

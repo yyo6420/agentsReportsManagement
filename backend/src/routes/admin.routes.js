@@ -1,5 +1,5 @@
 import express from "express";
-import { createAgent } from "../services/agents.service.js";
+import { createAgent, getAgents } from "../services/agents.service.js";
 import asyncHandler from "../utills/asyncHandler.js";
 import { auth } from "../middleWares/auth.middleware.js";
 import { hashPassword } from "../services/password.service.js";
@@ -13,6 +13,11 @@ router.post("/users", auth(["admin"]), asyncHandler(async (request, response) =>
     const agent = await createAgent(agentCode, hashedPassword, role || "agent");
 
     response.status(201).send({ message: "agent created successfully", agent });
+}))
+
+router.get("/users", auth(["admin"]), asyncHandler(async (request, response) => {
+    const agents = await getAgents({});
+    response.send(agents);
 }))
 
 export default router;
