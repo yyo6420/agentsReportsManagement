@@ -31,3 +31,9 @@ export const closeConnection = async () => {
     mongoconnection = null;
     console.log("MongoDB connection closed safely, bye bye ;)")
 };
+
+export const db = await getdb(process.env.DB_NAME);
+export const agentsCollection = db?.collection("agents");
+export const reportsCollection = db?.collection("reports");
+
+

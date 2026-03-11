@@ -17,6 +17,7 @@ export const auth = (roles) => (request, response, next) => {
         }
 
         request.agentId = decoded.id;
+        request.userRole = decoded.role
         next();
 
     } catch (error) {

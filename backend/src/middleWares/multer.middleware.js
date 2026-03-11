@@ -6,7 +6,7 @@ const createMulter = (extentions, storage) => {
         fileFilter: (request, file, cb) => {
             const validExt = extentions.some(ext => file.mimetype.endsWith(ext));
             cb(null, validExt)
-        }, limits: 1024 ** 2 * 5
+        }, limits: 1024 ** 2 * 5,
     })
 }
 

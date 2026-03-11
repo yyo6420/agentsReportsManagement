@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb";
-import { getdb } from "../mongodb/mongodb.js";
+import { agentsCollection, db } from "../mongodb/mongodb.js";
 
-const db = await getdb(process.env.DB_NAME);
-const agentsCollection = db?.collection("agents");
-
-export const createAgent = async (agentCode, password) => {
+export const createAgent = async (agentCode, password, role) => {
     if (agentsCollection === undefined) {
         agentsCollection = db?.collection("agents");
     }
@@ -12,7 +9,7 @@ export const createAgent = async (agentCode, password) => {
     const result = await agentsCollection.insertOne({
         agentCode,
         password,
-        role: "Agent"
+        role
     });
     return { id: result.insertedId, agentCode }
 }
