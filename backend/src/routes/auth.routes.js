@@ -13,7 +13,7 @@ router.post("/login", asyncHandler(async (request, response) => {
         return response.status(400).send({ message: "you must type a agentCode and password" })
     }
 
-    const agent = await getAgent({ agentCode });
+    const agent = await getAgent(agentCode);
     if (!agent) {
         return response.status(401).send({ message: "Sorry, your login information is invalid, try again" });
     }
@@ -24,12 +24,11 @@ router.post("/login", asyncHandler(async (request, response) => {
     }
 
     const token = generateToken({ id: agent._id, role: agent.role });
-    response.status(200).send({ token: token });
+    response.status(200).send({ token, agent });
 }))
 
 router.get("/me", auth(["agent", "admin"]), asyncHandler(async (request, response) => {
     const userProfile = await getAgentById(request.agentId, ["password"]);
-    if (!userProfile) throw new Error("user not exits ;(");
     response.send(userProfile);
 }))
 export default router;

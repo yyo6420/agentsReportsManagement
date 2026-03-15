@@ -4,7 +4,7 @@ export const auth = (roles) => (request, response, next) => {
     try {
         const header = request.headers.authorization;
 
-        if (!header) {
+        if (!header || !header.startsWith("Bearer ")) {
             return response.status(401).send({ message: "The header is missing :(" });
         }
 
@@ -12,7 +12,7 @@ export const auth = (roles) => (request, response, next) => {
 
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-        if (!roles.includes(decoded.roles)) {
+        if (!roles.includes(decoded.role)) {
             return response.status(403).send({ message: "Sorry, you don't have permission :(" });
         }
 

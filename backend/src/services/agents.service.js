@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { agentsCollection, db } from "../mongodb/mongodb.js";
 
 export const createAgent = async (agentCode, password, role) => {
-    if (agentsCollection === undefined) {
+    if (!agentsCollection) {
         agentsCollection = db?.collection("agents");
     }
 
@@ -15,28 +15,30 @@ export const createAgent = async (agentCode, password, role) => {
 }
 
 export const getAgent = async (agentCode) => {
-    if (agentsCollection === undefined) {
+    if (!agentsCollection) {
         agentsCollection = db?.collection("agents");
     }
-    const result = agentsCollection.findOne({ agentCode })
+    const result = await agentsCollection.findOne({ agentCode: agentCode });
 
     return result;
 }
 
-export const getAgentById = async (id, fieldToDelet = []) => {
-    if (agentsCollection === undefined) {
+export const getAgentById = async (id, fieldToDelete = []) => {
+    if (!agentsCollection) {
         agentsCollection = db?.collection("agents");
     }
 
     const result = await agentsCollection.findOne({ _id: new ObjectId(id) });
-    fieldToDelet.forEach(field => {
+    if (!result) throw new Error("The resulst are not found :(");
+
+    fieldToDelete.forEach(field => {
         delete result[field]
     })
     return result;
 }
 
 export const getAgents = async (filter = {}) => {
-    if (agentsCollection === undefined) {
+    if (!agentsCollection) {
         agentsCollection = db?.collection("agents");
     }
 

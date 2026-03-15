@@ -1,9 +1,5 @@
 export default function asyncHandler(handler) {
-    return () => {
-        try {
-            handler()
-        } catch (error) {
-            throw new Error(`handler error: ${error.message}`)
-        }
-    }
+    return (req, res, next) => {
+        Promise.resolve(handler(req, res, next)).catch(next);
+    };
 }

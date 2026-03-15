@@ -2,3 +2,61 @@
   min-height: 100vh;
   min-width: 100vw;
 }
+
+.loadingText {
+  font-size: 3rem;
+  padding-top: 15rem;
+  padding-right: 40.5rem;
+}
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.welcomeTitle {
+  font-size: 8rem;
+  color: #d5b858;
+}
+
+.loginDiv {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  background-color: aqua;
+}
+
+.loginTitle {
+  font-size: 2rem;
+  color: rgb(8, 8, 147);
+}
+
+.inputLable {
+  font-size: 2rem;
+}
+
+.loginInput {
+  width: 12rem;
+  height: 2rem;
+  padding: 0.6rem;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.loginButton {
+  text-decoration: none;
+  padding: 0.8rem;
+  background-color: rgb(106, 68, 19);
+  color: rgb(224, 197, 18);
+  border-radius: 25px;
+}
+
+.loginButton:hover {
+  background-color: rgb(224, 197, 18);
+  color: rgb(106, 68, 19);
+  cursor: grab;
+}

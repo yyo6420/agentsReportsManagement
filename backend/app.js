@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import { makemongoConnection } from "./src/mongodb/mongodb.js";
 import authRoutes from "./src/routes/auth.routes.js";
 import reportsRoutes from "./src/routes/reports.routes.js";
@@ -12,7 +13,9 @@ app.use(morgan("tiny"));
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 await makemongoConnection();
 
